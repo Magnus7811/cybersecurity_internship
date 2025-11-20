@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;">
+    <meta charset="UTF-8">
+    <title>Secure Download Portal | CryptoVault</title>
+    <style>
+        /* Inlined critical CSS for faster secure loading */
+        body { 
+            background: #0a0e14;
+            font-family: 'Courier New', monospace;
+            color: #e6e6e6;
+            margin: 0;
+            padding: 2rem;
+        }
+        .download-card {
+            background: rgba(15, 25, 35, 0.9);
+            max-width: 600px;
+            margin: 3rem auto;
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #0dff92;
+        }
+    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" nonce="{{ csp_nonce }}">
+</head>
+<body>
+    <div class="download-card">
+        <h2>🔒 Secure Download Ready</h2>
+        <div class="file-meta">
+            <strong>File:</strong> <span id="filename">{{ filename }}</span>
+        </div>
+        <div class="security-badge">
+            <span>AES-256 Encrypted</span>
+            <span>One-Time Download</span>
+        </div>
+        
+        <a href="{{ url_for('download_file', file_id=file_id) }}" 
+           class="download-btn"
+           id="secure-download">
+            DECRYPT & DOWNLOAD
+        </a>
+        
+        <div class="security-warning">
+            <p>⚠️ This link will expire after download or in 24 hours</p>
+        </div>
+    </div>
+
+    <script nonce="{{ csp_nonce }}">
+        // Client-side validation
+        document.getElementById('secure-download').addEventListener('click', (e) => {
+            sessionStorage.setItem('download_started', 'true');
+        });
+        
+        if(sessionStorage.getItem('download_started')) {
+            window.location.href = "{{ url_for('index') }}";
+        }
+    </script>
+</body>
+</html>

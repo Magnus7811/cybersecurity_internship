@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'unsafe-inline';">
+    <meta charset="UTF-8">
+    <title>Security Exception | CryptoVault</title>
+    <style>
+        .error-container {
+            background: #0a0e14;
+            color: #ff2e63;
+            font-family: 'Courier New', monospace;
+            padding: 2rem;
+            text-align: center;
+        }
+        .error-code {
+            font-size: 3rem;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <h1 class="error-code">SECURITY EXCEPTION [{{ error_code }}]</h1>
+        <p>{{ error }}</p>
+        <p>All actions have been logged with our security team.</p>
+        <a href="{{ url_for('index') }}" style="color: #0dff92;">
+            ➔ Return to Secure Portal
+        </a>
+    </div>
+</body>
+</html>

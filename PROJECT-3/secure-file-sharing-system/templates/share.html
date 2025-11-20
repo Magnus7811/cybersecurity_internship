@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Encrypted Successfully - CryptoVault</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="crypto-background">
+        <div class="particles"></div>
+        <div class="container">
+            <div class="header">
+                <img src="{{ url_for('static', filename='lock-icon.svg') }}" alt="Lock Icon" class="lock-icon">
+                <h1>Crypto<span>Vault</span></h1>
+                <p>File Successfully Encrypted & Uploaded</p>
+            </div>
+
+            <!-- Flash messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="flash {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <div class="share-box">
+                <div class="success-indicator">
+                    <div class="checkmark">✓</div>
+                    <h2>File Encrypted Successfully!</h2>
+                </div>
+
+                <div class="file-details">
+                    <div class="file-info-card">
+                        <div class="file-icon">📄</div>
+                        <div class="file-meta">
+                            <strong>{{ filename or 'Unknown File' }}</strong>
+                            <div class="encryption-status">
+                                <span class="chip">AES-256 Encrypted</span>
+                                <span class="chip">Password Protected</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="share-section">
+                    <label for="share-link">Shareable Download Link:</label>
+                    <div class="link-container">
+                        <input type="text" id="share-link" class="share-link-input" 
+                               value="{{ share_url or request.url_root + 'download/' + file_id }}" 
+                               readonly>
+                        <button class="copy-btn" onclick="copyLink()">
+                            <span id="copy-text">COPY</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="security-warning">
+                    <div class="warning-icon">⚠️</div>
+                    <div class="warning-text">
+                        <strong>Important Security Notes:</strong>
+                        <ul>
+                            <li>Share this link only with intended recipients</li>
+                            <li>File will be automatically deleted after first download</li>
+                            <li>Link expires in 24 hours for security</li>
+                            <li>Password is required for decryption</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <a href="{{ url_for('index') }}" class="btn secondary">Upload Another File</a>
+                    <button class="btn primary" onclick="testDownload()">Test Download</button>
+                </div>
+            </div>
+
+            <div class="features">
+                <div class="feature">
+                    <h3>🔐 Zero-Knowledge Security</h3>
+                    <p>Your password never leaves your device</p>
+                </div>
+                <div class="feature">
+                    <h3>🔄 One-Time Download</h3>
+                    <p>File automatically deleted after download</p>
+                </div>
+                <div class="feature">
+                    <h3>⏱️ Auto-Expiry</h3>
+                    <p>Links expire in 24 hours maximum</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function copyLink() {
+            const linkInput = document.getElementById('share-link');
+            const copyBtn = document.getElementById('copy-text');
+            
+            linkInput.select();
+            linkInput.setSelectionRange(0, 99999); // For mobile devices
+            
+            try {
+                document.execCommand('copy');
+                copyBtn.textContent = 'COPIED!';
+                copyBtn.parentElement.style.background = '#0dff92';
+                
+                setTimeout(() => {
+                    copyBtn.textContent = 'COPY';
+                    copyBtn.parentElement.style.background = '';
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy: ', err);
+                copyBtn.textContent = 'FAILED';
+                
+                setTimeout(() => {
+                    copyBtn.textContent = 'COPY';
+                }, 2000);
+            }
+        }
+
+        function testDownload() {
+            const shareUrl = document.getElementById('share-link').value;
+            window.open(shareUrl, '_blank');
+        }
+
+        // Auto-select link on page load for easy copying
+        document.addEventListener('DOMContentLoaded', function() {
+            const linkInput = document.getElementById('share-link');
+            linkInput.focus();
+        });
+    </script>
+
+    <style>
+        .share-box {
+            background: rgba(15, 25, 35, 0.9);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #0dff92;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .success-indicator {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .checkmark {
+            background: #0dff92;
+            color: #0a0e14;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+        }
+
+        .file-info-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .file-icon {
+            font-size: 2rem;
+        }
+
+        .file-meta strong {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .encryption-status {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .share-section {
+            margin: 2rem 0;
+        }
+
+        .share-section label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #0dff92;
+        }
+
+        .link-container {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .share-link-input {
+            flex: 1;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            color: #e6e6e6;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .copy-btn {
+            background: #0dff92;
+            color: #0a0e14;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: #0bcc75;
+            transform: translateY(-2px);
+        }
+
+        .security-warning {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .warning-icon {
+            font-size: 1.5rem;
+            color: #ffc107;
+        }
+
+        .warning-text ul {
+            margin: 0.5rem 0 0 0;
+            padding-left: 1.5rem;
+        }
+
+        .warning-text li {
+            margin: 0.25rem 0;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn.primary {
+            background: #0dff92;
+            color: #0a0e14;
+        }
+
+        .btn.primary:hover {
+            background: #0bcc75;
+            transform: translateY(-2px);
+        }
+
+        .btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #e6e6e6;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .link-container {
+                flex-direction: column;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</body>
+</html>

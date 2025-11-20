@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoVault - Secure File Sharing</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="crypto-background">
+        <div class="particles"></div>
+        <div class="container">
+            <div class="header">
+                <img src="{{ url_for('static', filename='lock-icon.svg') }}" alt="Lock Icon" class="lock-icon">
+                <h1>Crypto<span>Vault</span></h1>
+                <p>Military-Grade AES-256 Encrypted File Transfer</p>
+            </div>
+
+            <!-- Flash messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="flash {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <div class="upload-box">
+                <form id="upload-form" method="POST" enctype="multipart/form-data" action="{{ url_for('upload_file') }}">
+                    <div class="file-drop-area" id="drop-zone">
+                        <span class="file-msg">DRAG & DROP OR CLICK TO SELECT FILE</span>
+                        <input type="file" name="file" id="file-input" class="file-input" required>
+                    </div>
+                    <div class="file-info" id="file-info"></div>
+                    
+                    <!-- Password Protection Section -->
+                    <div class="password-section">
+                        <label for="password">Set Decryption Password:</label>
+                        <input type="password" name="password" id="password" 
+                               minlength="4" required 
+                               placeholder="Minimum 4 characters">
+                        <div class="password-strength" id="password-strength"></div>
+                    </div>
+                    
+                    <button type="submit" class="encrypt-btn">
+                        <span>ENCRYPT & UPLOAD</span>
+                        <div class="wave"></div>
+                    </button>
+                </form>
+                <div class="security-note">
+                    <div class="chip">AES-256</div>
+                    <div class="chip">CBC Mode</div>
+                    <div class="chip">Military Grade</div>
+                    <div class="chip">Password Protected</div>
+                </div>
+            </div>
+
+            <div class="features">
+                <div class="feature">
+                    <h3>Zero-Knowledge Encryption</h3>
+                    <p>Files encrypted with your password before upload</p>
+                </div>
+                <div class="feature">
+                    <h3>Secure Sharing</h3>
+                    <p>Share password-protected download links</p>
+                </div>
+                <div class="feature">
+                    <h3>Automatic Cleanup</h3>
+                    <p>Files auto-delete after download or 24 hours</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropZone = document.getElementById('drop-zone');
+            const fileInput = document.getElementById('file-input');
+            const fileInfo = document.getElementById('file-info');
+            const passwordInput = document.getElementById('password');
+            const passwordStrength = document.getElementById('password-strength');
+
+            // File upload handling
+            dropZone.addEventListener('click', () => fileInput.click());
+
+            fileInput.addEventListener('change', e => {
+                if(e.target.files.length) {
+                    const file = e.target.files[0];
+                    const fileSizeMB = (file.size / 1024 / 1024).toFixed(2);
+                    
+                    if (file.size > 100 * 1024 * 1024) {
+                        fileInfo.innerHTML = `
+                            <div class="file-card error">
+                                <div class="file-icon">❌</div>
+                                <div class="file-details">
+                                    <strong>File too large!</strong>
+                                    <div>Max 100MB (${fileSizeMB}MB detected)</div>
+                                </div>
+                            </div>
+                        `;
+                        fileInput.value = '';
+                    } else {
+                        fileInfo.innerHTML = `
+                            <div class="file-card">
+                                <div class="file-icon">📄</div>
+                                <div class="file-details">
+                                    <strong>${file.name}</strong>
+                                    <div>${fileSizeMB} MB</div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+            });
+
+            // Password strength indicator
+            passwordInput.addEventListener('input', function() {
+                const strength = calculatePasswordStrength(this.value);
+                passwordStrength.innerHTML = `
+                    <div class="strength-meter">
+                        <div class="strength-level level-${strength.level}" 
+                             style="width: ${strength.percent}%"></div>
+                    </div>
+                    <div class="strength-text">${strength.text}</div>
+                `;
+            });
+
+            function calculatePasswordStrength(password) {
+                const length = password.length;
+                let strength = 0;
+                
+                // Length contributes 50% of strength
+                strength += Math.min(50, (length / 12) * 50);
+                
+                // Character variety
+                if (/[A-Z]/.test(password)) strength += 10;
+                if (/[0-9]/.test(password)) strength += 10;
+                if (/[^A-Za-z0-9]/.test(password)) strength += 10;
+                
+                // Common patterns penalty
+                if (password.match(/password|1234|qwerty/i)) strength -= 30;
+                
+                strength = Math.max(0, Math.min(100, strength));
+                
+                let level, text;
+                if (strength < 30) {
+                    level = 1;
+                    text = "Weak";
+                } else if (strength < 70) {
+                    level = 2;
+                    text = "Moderate";
+                } else {
+                    level = 3;
+                    text = "Strong";
+                }
+                
+                return { level, percent: strength, text };
+            }
+
+            // Drag and drop handling
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, preventDefaults, false);
+            });
+
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropZone.addEventListener(eventName, highlight, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, unhighlight, false);
+            });
+
+            function highlight() {
+                dropZone.classList.add('highlight');
+            }
+
+            function unhighlight() {
+                dropZone.classList.remove('highlight');
+            }
+
+            dropZone.addEventListener('drop', handleDrop, false);
+
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                fileInput.files = dt.files;
+                fileInput.dispatchEvent(new Event('change'));
+            }
+        });
+    </script>
+</body>
+</html>
