@@ -1,0 +1,43 @@
+# Consolidated Project License
+
+## Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
+
+[cite_start]The projects contained within this repository were created by **Piyush Singh (Magnus7811)** as part of the **Future Interns Program 2025**[cite: 1, 4, 7]. The entire body of work is licensed under the CC BY-NC 4.0 license.
+
+To view a copy of this license, visit:
+[https://creativecommons.org/licenses/by-nc/4.0/](https://creativecommons.org/licenses/by-nc/4.0/)
+
+---
+
+### You are free to:
+* [cite_start]**Share** – copy and redistribute the code, documentation, and reports in any medium or format[cite: 1, 4, 7].
+* [cite_start]**Adapt** – remix, transform, and build upon the content for non-commercial purposes[cite: 1, 7].
+
+### Under the following terms:
+* [cite_start]**Attribution** – You must give appropriate credit to the original author (Piyush Singh), provide a link to this license, and indicate if any changes were made[cite: 1, 4, 7]. [cite_start]You may do so in any reasonable manner, but not in a way that suggests the licensor endorses you or your use[cite: 2, 5, 8].
+
+* [cite_start]**NonCommercial** – You may not use the material for commercial purposes[cite: 2, 5, 9]. [cite_start]This includes, but is not limited to, resale, paid academic or professional submissions, or use in paid training distribution without explicit permission[cite: 2, 5, 9].
+
+---
+
+### Scope of This License
+This license applies to all components across the three main internship tasks:
+
+**1. [cite_start]Task 1 – Web Application Security Testing** [cite: 7]
+* [cite_start]All content, analysis, screenshots, and vulnerability documentation in the task report[cite: 10].
+* [cite_start]The described methodology and tool usage examples[cite: 10].
+* [cite_start]Custom explanations, mitigation strategies, and OWASP Top 10 mappings[cite: 10].
+
+**2. [cite_start]Task 2 – SOC Alert Monitoring & Incident Response Simulation** [cite: 4]
+* [cite_start]All text, structure, and original analysis in the final report[cite: 6].
+* [cite_start]Visualizations created during the SOC simulation[cite: 6].
+* [cite_start]The content of the incident response and mitigation summaries[cite: 6].
+
+**3. [cite_start]Task 3 – Secure File Sharing System** [cite: 1]
+* [cite_start]All source code, including Python scripts, the Flask application, and encryption logic[cite: 3].
+* [cite_start]Frontend assets such as HTML templates and CSS styling[cite: 3].
+* [cite_start]Project documentation, README content, and the SSL setup process[cite: 3].
+
+<br>
+
+[cite_start]**© 2025 Piyush Singh (GitHub: Magnus7811)** [cite: 1, 4, 7]
