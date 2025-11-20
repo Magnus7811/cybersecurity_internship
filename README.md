@@ -1,13 +1,13 @@
 # Cybersecurity Internship Projects - Future Interns
 
-This repository showcases a collection of projects completed during a cybersecurity internship with **Future Interns**. The tasks demonstrate practical skills across offensive security (Web Application Penetration Testing), defensive security (SOC Analysis & Incident Response), and secure software development.
+This repository showcases a collection of projects completed during a cybersecurity internship with **Future Interns**. The tasks demonstrate practical skills across offensive security (Web Application Pentesting) and defensive security (Security Operations Center workflows), as well as secure application development.
 
 ---
 
 ## Task 1: Web Application Security Testing
 
 ### 🛡️ Project Objective
-The primary goal of this task was to conduct a comprehensive web application vulnerability assessment of the **OWASP Juice Shop** application. The exercise simulated a real-world penetration test, leveraging a combination of automated and manual testing techniques to identify and analyze security flaws.
+The primary goal of this task was to conduct a comprehensive web application vulnerability assessment of the **OWASP Juice Shop** application. The exercise simulated a real-world penetration test, identifying flaws as per the OWASP Top 10 framework and providing recommendations for remediation.
 
 ### 🔧 Tools & Technologies Used
 * **OWASP ZAP**: Dynamic Application Security Testing (DAST) scanner for initial vulnerability discovery.
@@ -19,20 +19,20 @@ The primary goal of this task was to conduct a comprehensive web application vul
 ### 🔍 Summary of Findings
 The assessment identified several critical and high-risk vulnerabilities, which are detailed below:
 
-| Vulnerability | OWASP Top 10 Mapping | Risk Level |
-| :--- | :--- | :--- |
-| SQL Injection | A01: Broken Access Control | High |
-| Cross-Site Scripting (XSS) | A03: Injection | Medium |
-| Broken Authentication | A07: Identification & Auth Failures | High |
-| Sensitive Data Exposure | A02: Cryptographic Failures | Medium |
-| Broken Access Control | A01: Broken Access Control | High |
+| Vulnerability             | OWASP Top 10 Mapping               | Risk Level |
+| :---                      | :---                               | :---       |
+| SQL Injection             | A01: Broken Access Control         | High       |
+| Cross-Site Scripting (XSS)| A03: Injection                     | Medium     |
+| Broken Authentication     | A07: Identification & Auth Failures| High       |
+| Sensitive Data Exposure   | A02: Cryptographic Failures        | Medium     |
+| Broken Access Control     | A01: Broken Access Control         | High       |
 
 ---
 
 ## Task 2: SOC Alert Monitoring & Incident Response Simulation
 
 ### 🛡️ Project Objective
-This task simulated the duties of a Security Operations Center (SOC) Analyst. The core objective was to utilize a Security Information and Event Management (SIEM) system to monitor, detect, analyze, and report on malicious activity within a controlled environment.
+This task simulated the duties of a Security Operations Center (SOC) Analyst. The core objective was to utilize a Security Information and Event Management (SIEM) system to monitor, detect, analyze, and respond to security incidents based on provided logs and threat intelligence.
 
 ### 🧰 Environment & Tools
 * **SIEM**: Elastic Stack (ELK - Elasticsearch, Logstash, Kibana) deployed on Kali Purple.
@@ -54,7 +54,7 @@ During the investigation, attacker behaviors were mapped to the MITRE ATT&CK® f
 ## Task 3: Secure File Sharing System
 
 ### 🧾 Project Overview
-This project involved the development of a secure file upload and download web portal. The application was built to ensure the confidentiality of data both at rest and in transit by implementing strong, password-based AES encryption.
+This project involved the development of a secure file upload and download web portal. The application was built to ensure the confidentiality of data both at rest and in transit by implementing strong cryptographic controls and secure sharing mechanisms.
 
 ### 🔐 Core Features
 * **End-to-End Encryption**: Files are encrypted with AES-256 before being stored and can only be decrypted with the correct user-provided password.
@@ -71,12 +71,7 @@ This project involved the development of a secure file upload and download web p
 
 ### 💻 Local Setup Instructions
 
-To run this project on a local machine, follow these steps:
-
-```bash
-### 💻 Local Setup Instructions
-
-To run this project on your local machine, follow these steps:
+To run the Secure File Sharing System locally, follow these steps:
 
 ```bash
 # 1. Clone the repository from GitHub
@@ -98,4 +93,4 @@ pip install -r requirements.txt
 python app.py
 ```
 
-Now, your Secure File Sharing System will be running locally, ensuring that all files and data are encrypted and shared securely.
+Your Secure File Sharing System will now be running locally, ensuring all files and data are encrypted in transit and at rest.
