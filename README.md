@@ -74,9 +74,14 @@ This project involved the development of a secure file upload and download web p
 To run this project on a local machine, follow these steps:
 
 ```bash
+### 💻 Local Setup Instructions
+
+To run this project on your local machine, follow these steps:
+
+```bash
 # 1. Clone the repository from GitHub
-git clone [https://github.com/Magnus7811/FUTURE_CS_03.git](https://github.com/Magnus7811/FUTURE_CS_03.git)
-cd FUTURE_CS_03
+git clone https://github.com/Magnus7811/cybersecurity_internship.git
+cd cybersecurity_internship/PROJECT-3
 
 # 2. Create and activate a Python virtual environment
 # For macOS/Linux:
@@ -91,5 +96,6 @@ pip install -r requirements.txt
 
 # 4. Run the Flask application with SSL enabled
 python app.py
-# cybersecurity_internship
-# cybersecurity_internship
+```
+
+Now, your Secure File Sharing System will be running locally, ensuring that all files and data are encrypted and shared securely.
